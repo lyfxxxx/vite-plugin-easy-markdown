@@ -1,8 +1,11 @@
 {
   "name": "vite-plugin-easy-markdown",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "git@github.com:lyfxxxx/vite-plugin-easy-markdown.git",
+  "scripts": {
+    "build": "tsc -p ."
+  },
   "author": "suyunpeng <894624801@qq.com>",
   "license": "MIT",
   "dependencies": {

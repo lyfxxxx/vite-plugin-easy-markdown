@@ -1,5 +1,5 @@
 import MarkDownIt from 'markdown-it'
-import { TransformResult } from 'rollup'
+import { TransformResult, Plugin } from 'rollup'
 import { createFilter } from 'rollup-pluginutils'
 import FrontMatter from 'front-matter'
 import * as htmlParser from 'htmlparser2'
@@ -25,22 +25,18 @@ declare interface Attributes {
   [contentEnum.IMAGE]?: string,
 }
 
-export interface MetaOptions {
-  [contentEnum.TITLE]?: boolean,
-  [contentEnum.CREATE_TIME]?: boolean,
-  [contentEnum.DESCRIPTION]?: boolean,
-  [contentEnum.IMAGE]?: boolean,
-  [contentEnum.FILE_NAME]?: boolean,
-  [contentEnum.ATTRIBUTES]?: boolean
-}
+type MetaOptions = contentEnum.TITLE | 
+  contentEnum.CREATE_TIME | 
+  contentEnum.DESCRIPTION | 
+  contentEnum.IMAGE | 
+  contentEnum.ATTRIBUTES |
+  contentEnum.FILE_NAME
 
-export interface OutputOptions {
-  [contentEnum.HTML]?: boolean,
-}
+type OutputOptions = contentEnum.HTML
 
 export interface TotalOptions {
-  metaOptions?: MetaOptions,
-  outputOptions?: OutputOptions,
+  metaOptions?: MetaOptions[],
+  outputOptions?: OutputOptions[],
   markdownItOptions?: MarkDownIt.Options,
   include?: FilterType,
   exclude?: FilterType,
@@ -111,9 +107,8 @@ class RecoderFactory {
   allowKeys: string[]
   result: string
 
-  constructor(metaOptions: MetaOptions, outputOptions: OutputOptions) {
-    const keys = [...Object.keys(metaOptions), ...Object.keys(outputOptions)]
-    this.allowKeys = keys.filter((key) => metaOptions[key] || outputOptions[key])
+  constructor(metaOptions: MetaOptions[], outputOptions: OutputOptions[]) {
+    this.allowKeys = [...Object.keys(metaOptions), ...Object.keys(outputOptions)]
     this.result = ''
   }
   add(key: string, value: string) {
@@ -130,7 +125,7 @@ class RecoderFactory {
 }
 
 const transformFunc = (code: string, id: string, options?: TotalOptions): TransformResult => {
-  const { metaOptions = {}, outputOptions = {}, markdownItOptions = {}, include = /\.md$/, exclude = null } = options || {}
+  const { metaOptions = [], outputOptions = [], markdownItOptions = {}, include = /\.md$/, exclude = null } = options || {}
   const filter = createFilter(include, exclude)
   // judge if need to transform
   if (!filter(id)) {
@@ -157,7 +152,7 @@ const transformFunc = (code: string, id: string, options?: TotalOptions): Transf
   }
 }
 
-export default function testPlugin(options: TotalOptions) {
+export default function plugin(options: TotalOptions): Plugin {
   return {
     name: 'rollup-plugin-easy-markdown',
     transform(code: string, id: string) {
