@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import md from './assets/test.md'
 console.log(md)
-debugger
 </script>
 
 <template>

@@ -13,5 +13,5 @@ declare module "*.md" {
   const description: string
   const createTime: string
   const fileName: string
-  export { html, attributes, title, description, createTime, fileName };
+  export default { html, attributes, title, description, createTime, fileName };
 }
