@@ -1,37 +1,60 @@
 <script setup lang="ts">
 import md from './assets/test.md'
-console.log(md)
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <div class="md-container">
-    <v-html :src="1"></v-html>
+  <div class="page-container">
+    <div class="md-list-item">
+      <div>
+        <div class="item-header">{{ md.title }}</div>
+        <div class="content">
+          <div class="text-content">
+            <div class="item-desc">{{ md.description }}</div>
+            <div class="item-time">{{ md.createTime }}</div>
+          </div>
+        </div>
+      </div>
+      <img :src="md.image" class="img-content" />
+    </div>
+    <div class="md-container">
+      <div v-html="md.html"></div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.page-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 .md-container {
-  max-width: 1000px;
-  margin: 0 auto
+  flex: 1 1 50%
+}
+.md-list-item {
+  flex: 1 1 50%;
+  display: flex;
+  height: 50px;
+  padding: 12px 20px 0;
+}
+.item-header {
+  font-weight: 600;
+  font-size: 16px;
+}
+.item-desc {
+  font-size: 13px;
+  line-height: 22px;
+  color: #8a919f;
+}
+.content {
+  display: flex;
+  width: 100%;
+}
+.text-content {
+}
+.img-content {
+  flex: 0 0 50px;
+  margin-left: 10px;
 }
 </style>

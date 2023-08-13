@@ -1,5 +1,6 @@
 import MarkDownIt from 'markdown-it'
-import { TransformResult, Plugin } from 'rollup'
+import { TransformResult } from 'rollup'
+import { Plugin } from 'vite'
 import { createFilter } from 'rollup-pluginutils'
 import FrontMatter from 'front-matter'
 import * as htmlParser from 'htmlparser2'
@@ -79,7 +80,7 @@ const getDesc = (rootNode: Document, desLength: number = 100): string => {
       res = `${res}${curText}`
     }
   })
-  return res
+  return `${res}...`
 }
 
 /**
@@ -105,14 +106,19 @@ const getFileName = (id: string): string => {
 
 class RecoderFactory {
   allowKeys: string[]
+  usedKeys: string[]
   result: string
 
   constructor(metaOptions: MetaOptions[], outputOptions: OutputOptions[]) {
-    this.allowKeys = [...Object.keys(metaOptions), ...Object.keys(outputOptions)]
+    this.allowKeys = [...metaOptions, ...outputOptions]
+    this.usedKeys = []
     this.result = ''
   }
   add(key: string, value: string) {
-    this.result = this.allowKeys.includes(key) ? `${this.result}export const ${key} = ${JSON.stringify(value)}\n` : this.result
+    if (this.allowKeys.includes(key)) {
+      this.result = `${this.result}export const ${key} = ${JSON.stringify(value)}\n`
+      this.usedKeys.push(key)
+    }
   }
   addTotal(data: {[x: string]: string}) {
     for (const key in data) {
@@ -120,7 +126,7 @@ class RecoderFactory {
     }
   }
   export() {
-    return this.result
+    return `${this.result}export default {${this.usedKeys.join(',')}}`
   }
 }
 
@@ -129,7 +135,7 @@ const transformFunc = (code: string, id: string, options?: TotalOptions): Transf
   const filter = createFilter(include, exclude)
   // judge if need to transform
   if (!filter(id)) {
-    return
+    return null
   }
   const recorder = new RecoderFactory(metaOptions, outputOptions)
   const fm = FrontMatter<Attributes>(code)
