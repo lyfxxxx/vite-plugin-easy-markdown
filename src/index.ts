@@ -4,7 +4,7 @@ import { Plugin } from 'vite'
 import { createFilter } from 'rollup-pluginutils'
 import FrontMatter from 'front-matter'
 import * as htmlParser from 'htmlparser2'
-import { Element, Document } from 'domhandler'
+import { Element, Document, Node as DomHandlerNode } from 'domhandler'
 import { filter, textContent, findOne } from 'domutils'
 
 export enum contentEnum {
@@ -19,7 +19,7 @@ export enum contentEnum {
 
 declare type FilterType = Array<string | RegExp> | string | RegExp | null
 
-declare interface Attributes {
+export declare interface Attributes {
   [contentEnum.TITLE]?: string,
   [contentEnum.DESCRIPTION]?: string,
   [contentEnum.CREATE_TIME]?: string,
@@ -48,12 +48,14 @@ export interface TotalOptions {
  * @param rootNode root node of transformed html file
  * @returns the text of the highest level <h*>tag node
  */
-const getTitle = (rootNode: Document): string => {
+export const getTitle = (rootNode: Document): string => {
   const resTitle = {
     level: 999,
     value: '',
   }
-  const titleList = filter((ele) => ele instanceof Element && ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(ele.tagName), rootNode) as Element[]
+  const titleList = filter((ele) => {
+    return ele instanceof Element && ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(ele.tagName)
+  }, rootNode) as Element[]
 
   // Find the highest level and the first <h*> tag
   titleList.forEach((ele) => {
@@ -70,14 +72,16 @@ const getTitle = (rootNode: Document): string => {
  * @param desLength max length of descrption
  * @returns description
  */
-const getDesc = (rootNode: Document, desLength: number = 100): string => {
+export const getDesc = (rootNode: Document, desLength: number = 100): string => {
   let res = ''
   const pList = filter((ele) => ele instanceof Element && ['p'].includes(ele.tagName), rootNode) as Element[]
 
   pList.forEach((ele) => {
     const curText = textContent(ele) || ''
     if (res.length + curText.length <= desLength) {
-      res = `${res}${curText}`
+      res = `${res} ${curText}`
+    } else {
+      res = `${res} ${curText.substring(0, desLength - res.length)}`
     }
   })
   return `${res}...`
@@ -88,17 +92,17 @@ const getDesc = (rootNode: Document, desLength: number = 100): string => {
  * @param rootNode root node of transformed html file
  * @returns image url
  */
-const getImgUrl = (rootNode: Document): string => {
+export const getImgUrl = (rootNode: Document): string => {
   const imageNode = findOne((ele) => ele instanceof Element && ['img'].includes(ele.tagName), rootNode.childNodes)
   return imageNode?.attribs.src || ''
 }
 
 /**
- * 
+ * get file name
  * @param id 
- * @returns 
+ * @returns file name
  */
-const getFileName = (id: string): string => {
+export const getFileName = (id: string): string => {
   const fileNameReg = /(?<=\/)\w+(?=\.)/g
   const fileName = (id.match(fileNameReg) || [])[0] || ''
   return fileName
@@ -130,7 +134,7 @@ class RecoderFactory {
   }
 }
 
-const transformFunc = (code: string, id: string, options?: TotalOptions): TransformResult => {
+export const transformFunc = (code: string, id: string, options?: TotalOptions): TransformResult => {
   const { metaOptions = [], outputOptions = [], markdownItOptions = {}, include = /\.md$/, exclude = null } = options || {}
   const filter = createFilter(include, exclude)
   // judge if need to transform
@@ -160,7 +164,7 @@ const transformFunc = (code: string, id: string, options?: TotalOptions): Transf
 
 export default function plugin(options: TotalOptions): Plugin {
   return {
-    name: 'rollup-plugin-easy-markdown',
+    name: 'vite-plugin-easy-markdown',
     transform(code: string, id: string) {
       return transformFunc(code, id, options)
     }

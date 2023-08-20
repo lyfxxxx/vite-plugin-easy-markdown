@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import mdPlugin, { contentEnum } from 'rollup-plugin-easy-markdown'
+import mdPlugin, { contentEnum } from 'vite-plugin-easy-markdown'
 import Inspect from 'vite-plugin-inspect'
 
 // https://vitejs.dev/config/
