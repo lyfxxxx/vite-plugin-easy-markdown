@@ -12,7 +12,6 @@ const html = MarkDownIt({}).render(fm.body)
 const root = htmlParser.parseDocument(html)
 
 describe('test md func', () => {
-
   it('test md import', () => {
     expectTypeOf(testCode).toBeString()
   })

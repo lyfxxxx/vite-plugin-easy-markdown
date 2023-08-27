@@ -134,8 +134,17 @@ class RecoderFactory {
   }
 }
 
+const defaultMetaOptions: MetaOptions[] = [
+  contentEnum.ATTRIBUTES, contentEnum.CREATE_TIME, 
+  contentEnum.DESCRIPTION, contentEnum.TITLE, contentEnum.IMAGE
+]
+
+const defaultOutputOptions: OutputOptions[] = [
+  contentEnum.HTML
+]
+
 export const transformFunc = (code: string, id: string, options?: TotalOptions): TransformResult => {
-  const { metaOptions = [], outputOptions = [], markdownItOptions = {}, include = /\.md$/, exclude = null } = options || {}
+  const { metaOptions = defaultMetaOptions, outputOptions = defaultOutputOptions, markdownItOptions = {}, include = /\.md$/, exclude = null } = options || {}
   const filter = createFilter(include, exclude)
   // judge if need to transform
   if (!filter(id)) {
