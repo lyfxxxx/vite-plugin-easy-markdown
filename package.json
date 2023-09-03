@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-easy-markdown",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,6 +17,12 @@
     "build": "tsup",
     "test": "vitest"
   },
+  "keywords": [
+    "vite",
+    "frontmatter",
+    "markdown",
+    "vue"
+  ],
   "author": "suyunpeng <894624801@qq.com>",
   "license": "MIT",
   "dependencies": {

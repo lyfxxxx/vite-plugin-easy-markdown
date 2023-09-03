@@ -19,9 +19,8 @@ The complete result is for display the whole markdown file. For now it's only su
 ```ts
 type OutputOptions = contentEnum.HTML
 ```
-
 ## Usage
-There is an example in /example fold.
+There is an example you could refer in /example fold.
 
 The most simple way is using its default config by not config anything. It will provide everything which is mentioned in Options.
 ```js
@@ -65,3 +64,21 @@ export default defineConfig({
   }) ],
 })
 ```
+
+## TypeScript Support
+For TS project, you need to add below typedefs to your `d.ts` file.
+```typescript
+declare module "*.md" {
+  const html: string
+  const attributes: string
+  const title: string
+  const description: string
+  const createTime: string
+  const fileName: string
+  const image: string
+  export default { html, attributes, title, description, createTime, fileName, image };
+}
+```
+
+## License
+MIT

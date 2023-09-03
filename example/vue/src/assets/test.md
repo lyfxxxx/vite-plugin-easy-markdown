@@ -1,53 +1,63 @@
-# vuejs/core [![npm](https://img.shields.io/npm/v/vue.svg)](https://www.npmjs.com/package/vue) [![build status](https://github.com/vuejs/core/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vuejs/core/actions/workflows/ci.yml)
+# github-markdown-css
 
-## Getting Started
+> The minimal amount of CSS to replicate the GitHub Markdown style
 
-Please follow the documentation at [vuejs.org](https://vuejs.org/)!
+**The CSS is generated. Contributions should go to [this repo](https://github.com/sindresorhus/generate-github-markdown-css).**
 
-## Sponsors
+[<img src="https://cloud.githubusercontent.com/assets/170270/5219062/f22a978c-7685-11e4-8316-af25b6c89bc0.png" width="300">](http://sindresorhus.com/github-markdown-css)
 
-Vue.js is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/vuejs/core/blob/main/BACKERS.md). If you'd like to join them, please consider [ sponsoring Vue's development](https://vuejs.org/sponsor/).
+## [Demo](https://sindresorhus.com/github-markdown-css)
 
-<p align="center">
-  <h3 align="center">Special Sponsor</h3>
-</p>
+## Install
 
-<p align="center">
-  <a target="_blank" href="https://github.com/appwrite/appwrite">
-  <img alt="special sponsor appwrite" src="https://sponsors.vuejs.org/images/appwrite.svg" width="300">
-  </a>
-</p>
+Download [manually](https://raw.githubusercontent.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css), from [CDNJS](https://cdnjs.com/libraries/github-markdown-css), or with npm:
 
-<p align="center">
-  <a target="_blank" href="https://vuejs.org/sponsor/#current-sponsors">
-    <img alt="sponsors" src="https://sponsors.vuejs.org/sponsors.svg?v2">
-  </a>
-</p>
+```sh
+npm install github-markdown-css
+```
 
-## Questions
+## Usage
 
-For questions and support please use [the official forum](https://forum.vuejs.org) or [community chat](https://chat.vuejs.org/). The issue list of this repo is **exclusively** for bug reports and feature requests.
+Import the `github-markdown.css` file and add a `markdown-body` class to the container of your rendered Markdown and set a width for it. GitHub uses `980px` width and `45px` padding, and `15px` padding for mobile.
 
-## Issues
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="github-markdown.css">
+<style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
 
-Please make sure to respect issue requirements and use [the new issue helper](https://new-issue.vuejs.org/) when opening an issue. Issues not conforming to the guidelines may be closed immediately.
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+</style>
+<article class="markdown-body">
+	<h1>Unicorns</h1>
+	<p>All the things</p>
+</article>
+```
 
-## Stay In Touch
+You can use [GitHub's `/markdown` API](https://docs.github.com/en/free-pro-team@latest/rest/reference/markdown) to turn Markdown into the HTML that GitHub generates, which works well with the CSS in this repo. Other Markdown parsers will mostly work with these styles too. To mimic how GitHub highlights code, you can use [`starry-night`](https://github.com/wooorm/starry-night) with your Markdown parser of choice.
 
-- [Twitter](https://twitter.com/vuejs)
-- [Blog](https://blog.vuejs.org/)
-- [Job Board](https://vuejobs.com/?ref=vuejs)
+There are 3 themes provided in this package:
 
-## Contribution
+- **github-markdown.css**: (default) Automatically switches between light and dark through [`@media (prefers-color-scheme)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).
+- **github-markdown-light.css**: Light-only.
+- **github-markdown-dark.css**: Dark-only.
 
-Please make sure to read the [Contributing Guide](https://github.com/vuejs/core/blob/main/.github/contributing.md) before making a pull request. If you have a Vue-related project/component/tool, add it with a pull request to [this curated list](https://github.com/vuejs/awesome-vue)!
+You may know that now GitHub supports more than 2 themes including `dark_dimmed`, `dark_high_contrast` and `colorblind` variants. If you want to try these themes, you can generate them on your own! See next section.
 
-Thank you to all the people who already contributed to Vue!
+## How
 
-<a href="https://github.com/vuejs/core/graphs/contributors"><img src="https://opencollective.com/vuejs/contributors.svg?width=890" /></a>
+See [`generate-github-markdown-css`](https://github.com/sindresorhus/generate-github-markdown-css) for how it's generated and ability to generate your own.
 
-## License
+## Dev
 
-[MIT](https://opensource.org/licenses/MIT)
-
-Copyright (c) 2013-present, Yuxi (Evan) You
+Run `npm run make` to update the CSS.
