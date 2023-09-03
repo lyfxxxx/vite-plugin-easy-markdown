@@ -7,9 +7,6 @@ import hljs from 'highlight.js'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [ Inspect(), mdPlugin({
-    metaOptions: [contentEnum.ATTRIBUTES, contentEnum.CREATE_TIME, 
-      contentEnum.DESCRIPTION, contentEnum.TITLE, contentEnum.IMAGE],
-    outputOptions: [contentEnum.HTML],
     markdownItOptions: {
       html: true,
       highlight: (str, lang) => {
