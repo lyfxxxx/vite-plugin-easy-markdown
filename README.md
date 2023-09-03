@@ -22,13 +22,35 @@ type OutputOptions = contentEnum.HTML
 ## Usage
 There is an example you could refer in /example fold.
 
-The most simple way is using its default config by not config anything. It will provide everything which is mentioned in Options.
+The most simple way is using its default config by not config anything. It will provide everything which is mentioned in Config Options chapter.
 ```js
 import mdPlugin from 'vite-plugin-easy-markdown'
 
 export default defineConfig({
   plugins: [ mdPlugin() ],
 })
+```
+
+```markdown
+# my-title
+
+## Install
+
+[<img src="https://lyfxxxx.github.io/syp.github.io/assets/DSCF6605-1.0b4ce2f0.jpg
+" width="300">](http://sindresorhus.com/github-markdown-css)
+
+
+## Usage
+
+Import the `github-markdown.css` file and add a `markdown-body` class to the container of your rendered Markdown and set a width for it. GitHub uses `980px` width and `45px` padding, and `15px` padding for mobile.
+```
+you will get:
+```js
+import md from 'assets/test.md'
+
+console.log(md.html) // <h1>my-title</h1>\n<h2>Install</h2>\n<p><a href=\"http://sindresorhus.com/github-markdown-css\">...
+console.log(md.image) // https://lyfxxxx.github.io/syp.github.io/assets/DSCF6605-1.0b4ce2f0.jpg
+console.log(md.description) //   Import the github-markdown.css file and add a markdown-body class to the container of your rendered...
 ```
 
 Of course you could customise your output. For example, we may don't need anything but title.
