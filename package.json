@@ -12,7 +12,10 @@
     "dist"
   ],
   "type": "module",
-  "repository": "git@github.com:lyfxxxx/vite-plugin-easy-markdown.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hmsk/vite-plugin-markdown.git"
+  },
   "scripts": {
     "build": "tsup",
     "test": "vitest"
@@ -25,6 +28,10 @@
   ],
   "author": "suyunpeng <894624801@qq.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyfxxxx/vite-plugin-easy-markdown/issues"
+  },
+  "homepage": "https://github.com/lyfxxxx/vite-plugin-easy-markdown/blob/main/README.md",
   "dependencies": {
     "domhandler": "^5.0.3",
     "domutils": "^3.1.0",
