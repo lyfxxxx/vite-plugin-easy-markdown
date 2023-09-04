@@ -4,7 +4,7 @@ import { Plugin } from 'vite'
 import { createFilter } from 'rollup-pluginutils'
 import FrontMatter from 'front-matter'
 import * as htmlParser from 'htmlparser2'
-import { Element, Document, Node as DomHandlerNode } from 'domhandler'
+import { Element, Document } from 'domhandler'
 import { filter, textContent, findOne } from 'domutils'
 
 export enum contentEnum {

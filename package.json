@@ -44,6 +44,7 @@
     "eslint": "^8.33.0",
     "rollup": "^3.27.2",
     "rollup-pluginutils": "^2.8.2",
+    "terser": "^5.19.4",
     "tsup": "^7.2.0",
     "typescript": "^4.9.5",
     "vite": "^4.0.4",
