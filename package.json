@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-easy-markdown",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
