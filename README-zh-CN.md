@@ -51,7 +51,6 @@ console.log(md.html) // <h1>my-title</h1>\n<h2>Install</h2>\n<p><a href=\"http:/
 console.log(md.image) // https://lyfxxxx.github.io/syp.github.io/assets/DSCF6605-1.0b4ce2f0.jpg
 console.log(md.description) //   Import the github-markdown.css file and add a markdown-body class to the container of your rendered...
 ```
-Plugin will automaticlly get those infos by given logic，but you can assign them in front matter，it has higher priorities.
 插件会根据给定的逻辑自动获取上述信息，但是你可以在front matter中指定它们，指定的内容会有更高的优先级。
 ```md
 ---
